@@ -59,13 +59,13 @@ def parens_update(current_output, next_input):
       the updated value of `current_output`
     """
     ###TODO
-    if current_output <= 0:#?
+    if current_output <= 0:#invalid, negative
       return current_output#carry on
     if next_input == '(':
       return current_output + 1
     elif next_input == ')':
       if current_output <= 0:
-        return -math.inf
+        return -math.inf#meaning, invalid less than 0
       else:
         return current_output - 1
     else:
@@ -98,7 +98,7 @@ def parens_match_scan(mylist):
     False
     
     """
-    ###TODO
+    ###TODO goes into the scan function
     hist, last = scan(add, 0, list(map(paren_map, mylist)))
     print(hist, last)
     return last == 0 and reduce(min_f, 0, hist) >=0
@@ -175,7 +175,7 @@ def parens_match_dc_helper(mylist):
     """
     ###TODO
     if len(mylist) == 0:#if empty
-      return [0,0]#empty
+      return (0,0)#empty
     elif len(mylist) == 1:#if only one
       if mylist[0] == '(':
         return (0,1) #unmatvhed (
@@ -183,10 +183,10 @@ def parens_match_dc_helper(mylist):
         return (1,0)#just a )
       else:#weird case if input isnt a ()
         return (0,0)
-    right1,left1 = parens_match_dc_helper(mylist[:len(mylist)//2])#
-    right2,left2 = parens_match_dc_helper(mylist[len(mylist)//2:])
-    if left1>right2:
-      return (right1, (left1-right2)+left2)
+    right1,left1 = parens_match_dc_helper(mylist[:len(mylist)//2])#first input is ( or )
+    right2,left2 = parens_match_dc_helper(mylist[len(mylist)//2:])#next input ( or )
+    if left1>right2:#if first input is ( and last input isnt )
+      return (right1, (left1-right2)+left2)#if there is a ( or ) itll be 1
     else: 
       return ((right2-left1)+right1, left2)
 
