@@ -43,7 +43,7 @@ def parens_match_iterative(mylist):
     False
     """
     ### TODO
-    pass
+    return iterate(parens_update, 0, mylist) == 0
 
 
 def parens_update(current_output, next_input):
@@ -59,7 +59,17 @@ def parens_update(current_output, next_input):
       the updated value of `current_output`
     """
     ###TODO
-    pass
+    if current_output <= 0:#?
+      return current_output#carry on
+    if next_input == '(':
+      return current_output + 1
+    elif next_input == ')':
+      if current_output <= 0:
+        return -math.inf
+      else:
+        return current_output - 1
+    else:
+      return current_output
 
 
 def test_parens_match_iterative():
@@ -69,7 +79,8 @@ def test_parens_match_iterative():
 
 
 #### Scan solution
-
+def add(x,y):#need a function to add bc scan takes a function
+  return x+y
 def parens_match_scan(mylist):
     """
     Implement a solution to the parens matching problem using `scan`.
@@ -88,7 +99,9 @@ def parens_match_scan(mylist):
     
     """
     ###TODO
-    pass
+    hist, last = scan(add, 0, list(map(paren_map, mylist)))
+    print(hist, last)
+    return last == 0 and reduce(min_f, 0, hist) >=0
 
 def scan(f, id_, a):
     """
@@ -161,8 +174,21 @@ def parens_match_dc_helper(mylist):
       parens_match_dc to return the final True or False value
     """
     ###TODO
-    pass
-    
+    if len(mylist) == 0:#if empty
+      return [0,0]#empty
+    elif len(mylist) == 1:#if only one
+      if mylist[0] == '(':
+        return (0,1) #unmatvhed (
+      elif mylist[0] == ')':
+        return (1,0)#just a )
+      else:#weird case if input isnt a ()
+        return (0,0)
+    right1,left1 = parens_match_dc_helper(mylist[:len(mylist)//2])#
+    right2,left2 = parens_match_dc_helper(mylist[len(mylist)//2:])
+    if left1>right2:
+      return (right1, (left1-right2)+left2)
+    else: 
+      return ((right2-left1)+right1, left2)
 
 def test_parens_match_dc():
     assert parens_match_dc(['(', ')']) == True

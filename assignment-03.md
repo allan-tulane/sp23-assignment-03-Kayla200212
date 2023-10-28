@@ -1,6 +1,6 @@
 # CMPS 2200 Assignment 3
 
-In this assignment we'll explore further sequence, map, reduce, scan, and divide and conquer algorithms.
+In this assignment we'll explore further sequence, map, reduce, scan, and divide and conquer algorithms. 
 
 **To make grading easier, please place all written solutions directly in `answers.md`, rather than scanning in handwritten work or editing this file.**
 
